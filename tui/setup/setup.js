@@ -6,7 +6,7 @@ const { SetupLanguageTuiComponent } = require("./setup_language");
 const { SetupCategoriesTuiComponent } = require("./setup_categories");
 const { SetupDifficultyTuiComponent } = require("./setup_difficulty");
 const { bgGreen } = require("colors");
-const { GameStatisticsTuiComponent } = require("../statistics/statistics");
+const { GameStatisticsTuiComponent } = require("../statistics");
 
 class SetupTuiComponent {
   /**

@@ -41,7 +41,7 @@ class SetupCategoriesTuiComponent {
 
   print() {
     if (this.#done) {
-      console.log(`${magenta("Palabras: ")}${yellow(this.#game.availableWords + "")}`);
+      console.log(`${magenta("Palabras: \t")}${yellow(this.#game.availableWords + "")}`);
     } else {
       console.log(magenta("Seleccionar categorías: "));
       const allOptions =
@@ -50,18 +50,18 @@ class SetupCategoriesTuiComponent {
           : "Todas";
       const categories = [allOptions, ...this.#game.availableCategories];
       categories.forEach((category, index) => {
-        const selected = this.#game.selectedCategories.includes(category) ? green("X") : " ";
+        const selected = this.#game.selectedCategories.includes(category) ? green("\u2611") : "\u2610";
         if (index === this.#selected) {
           if (index === 0) {
             console.log(bold(`  ${category}`));
           } else {
-            console.log(bold(`  [${selected}] ${category}`));
+            console.log(bold(`  ${selected} ${category}`));
           }
         } else {
           if (index === 0) {
             console.log(gray(`  ${category}`));
           } else {
-            console.log(gray(`  [${selected}] ${category}`));
+            console.log(gray(`  ${selected} ${category}`));
           }
         }
       });
@@ -82,7 +82,7 @@ class SetupCategoriesTuiComponent {
   update(key) {
     switch (key.name) {
       case "down":
-        if (this.#selected >= this.#game.availableCategories.length + 1) {
+        if (this.#selected >= this.#game.availableCategories.length) {
           this.#selected = 0;
         } else {
           this.#selected += 1;
@@ -90,7 +90,7 @@ class SetupCategoriesTuiComponent {
         break;
       case "up":
         if (this.#selected <= 0) {
-          this.#selected = this.#game.availableCategories.length + 1;
+          this.#selected = this.#game.availableCategories.length;
         } else {
           this.#selected -= 1;
         }

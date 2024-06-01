@@ -1,6 +1,6 @@
 /// @ts-check
 
-const { magenta, bold, gray, yellow } = require("colors");
+const { magenta, yellow, green } = require("colors");
 const { HangmanGame, Difficulty } = require("@gamariverib/hangman-game-lib");
 const { KeywordsTuiComponent } = require("../keyword");
 
@@ -47,14 +47,14 @@ class SetupDifficultyTuiComponent {
   print() {
     if (this.#done) {
       const difficulty = difficulties[this.#game.difficulty ? this.#game.difficulty : 0];
-      console.log(`${magenta("Nivel: ")}${yellow(difficulty)}`);
+      console.log(`${magenta("Nivel:  \t")}${yellow(difficulty)}`);
     } else {
       console.log(magenta("Seleccionar nivel de dificultad: "));
       difficulties.forEach((difficulty, index) => {
         if (index === this.#selected) {
-          console.log(bold(`  ${index + 1}) ${difficulty}`));
+          console.log(`  ${green("\u25C9")} ${difficulty}`);
         } else {
-          console.log(gray(`  ${index + 1}) ${difficulty}`));
+          console.log(`  \u25CE ${difficulty}`);
         }
       });
       console.log();

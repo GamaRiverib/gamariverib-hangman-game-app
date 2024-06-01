@@ -2,7 +2,7 @@
 
 const { yellow, red, bgGreen } = require("colors");
 const { HangmanGame, GameStatistics } = require("@gamariverib/hangman-game-lib");
-const { KeywordsTuiComponent } = require("../keyword");
+const { KeywordsTuiComponent } = require("./keyword");
 
 const HelpersNames = ["Descubrir", "Descartar", "Pistas"];
 
@@ -69,7 +69,7 @@ class GameStatisticsTuiComponent {
   }
 
   /**
-   * @param {import("../..").KeypressEvent} key
+   * @param {import("../").KeypressEvent} key
    */
   update(key) {
     switch (key.name) {

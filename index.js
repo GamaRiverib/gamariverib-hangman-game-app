@@ -1,4 +1,5 @@
-/// @ts-check
+#!/usr/bin/env node
+// @ts-check
 
 const readline = require("readline");
 
@@ -10,7 +11,7 @@ const { getHangmanGameInstance, saveGameConfig, saveGameStatistics } = require("
 
 const { SetupTuiComponent } = require("./tui/setup/setup");
 const { TitleTuiComponent } = require("./tui/title");
-const { GameTuiComponent } = require("./tui/game/game");
+const { GameTuiComponent } = require("./tui/game");
 
 /**
  * @typedef {Object} KeypressEvent

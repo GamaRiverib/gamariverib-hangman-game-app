@@ -2,8 +2,8 @@
 
 const { red, yellow, underline, green, bold, cyan, bgGreen, bgRed } = require("colors");
 const { HangmanGame, GameStatus, Difficulty, Letters, HelperTypeEnum, GameRoundStatus, stringToLetter } = require("@gamariverib/hangman-game-lib");
-const { KeywordsTuiComponent } = require("../keyword");
-const { GameStatisticsTuiComponent } = require("../statistics/statistics");
+const { KeywordsTuiComponent } = require("./keyword");
+const { GameStatisticsTuiComponent } = require("./statistics");
 
 const difficulties = ["Fácil", "Normal", "Díficil"];
 
@@ -78,10 +78,10 @@ class GameTuiComponent {
     const remaining = this.#game.state?.round.remainingOportunities || 0;
     let line = yellow("Oportunidades: \t");
     for (let i = 0; i < total - remaining; i++) {
-      line += ` ${red("███")} `;
+      line += ` ${red("\u2588\u2588\u2588")} `;
     }
     for (let i = 0; i < remaining; i++) {
-      line += " ███ ";
+      line += " \u2588\u2588\u2588 ";
     }
     return line;
   }
@@ -148,7 +148,6 @@ class GameTuiComponent {
     const rows = Math.round(Letters.length / lineLength) + 1;
     const lines = [];
     let i = 0;
-    const proven = this.#game.state?.round.provenLetters || [];
     const remaining = this.#game.state?.round.remainingLetters || [];
     const word = this.#game.state?.round.word;
     lines.push(yellow("Letras: \r\n"));
@@ -239,16 +238,16 @@ class GameTuiComponent {
     if (status && status === GameRoundStatus.Finished) {
       lines = [];
       if (completed) {
-        lines.push(`${yellow("Mensajes:")} \t ${bgGreen(" ¡ G A N A S T E ! ")}`);
+        lines.push(`${yellow("Mensajes:")} \t ${bgGreen(" ¡ G A N A S T E ! \u263A ")}`);
       } else {
-        lines.push(`${yellow("Mensajes:")} \t ${bgRed(" P E R D I S T E :( ")}`);
+        lines.push(`${yellow("Mensajes:")} \t ${bgRed(" P E R D I S T E \u2639 ")}`);
       }
       return lines;
     }
     if (this.#messages.length) {
       lines.push(yellow("Mensajes: \r\n"));
       this.#messages.forEach((message) => {
-        lines.push(`\t - ${message}`);
+        lines.push(`\t \u270E  ${message}`);
       });
       this.#messages = [];
     }
@@ -284,7 +283,7 @@ class GameTuiComponent {
 
   /**
    * Actualiza el estado del componente
-   * @param {import("../..").KeypressEvent} key Tecla presionada
+   * @param {import("..").KeypressEvent} key Tecla presionada
    */
   update(key) {
     if (key.ctrl) {
@@ -370,14 +369,15 @@ class GameTuiComponent {
       if (letter) {
         const remaining = this.#game.state?.round.remainingLetters || [];
         if (!remaining.includes(letter)) {
-          this.#messages.push(yellow(`Letra ${cyan(letter.toLocaleUpperCase())} ya utilizada`));
+          this.#messages.push(yellow(`Letra ${cyan(letter.toLocaleUpperCase())} ya utilizada ${cyan("\u2757")}`));
           return;
         }
         try {
-          if (this.#game.proveLetter(letter)) {
-            this.#messages.push(`Letra ${green(letter.toLocaleUpperCase())} encontrada`);
+          const l = stringToLetter(letter);
+          if (this.#game.proveLetter(l || letter)) {
+            this.#messages.push(`Letra ${cyan(letter.toLocaleUpperCase())} encontrada ${green("\u2714")}`);
           } else {
-            this.#messages.push(`Letra ${yellow(letter.toLocaleUpperCase())} no encontrada`);
+            this.#messages.push(`Letra ${cyan(letter.toLocaleUpperCase())} no encontrada ${red("\u2718")}`);
           }
         } catch (reason) {
           this.#messages.push(red(reason.message || reason));

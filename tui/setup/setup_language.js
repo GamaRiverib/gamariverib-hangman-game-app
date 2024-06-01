@@ -1,6 +1,6 @@
 /// @ts-check
 
-const { magenta, bold, gray, yellow } = require("colors");
+const { magenta, bold, gray, yellow, green } = require("colors");
 const { HangmanGame } = require("@gamariverib/hangman-game-lib");
 const { KeywordsTuiComponent } = require("../keyword");
 
@@ -52,15 +52,15 @@ class SetupLanguageTuiComponent {
 
   print() {
     if (this.#done) {
-      console.log(`${magenta("Idioma: ")}${yellow(languages[this.#game.language])}`);
+      console.log(`${magenta("Idioma: \t")}${yellow(languages[this.#game.language])}`);
     } else {
       const availableLanguages = this.#game.languages;
       console.log(magenta("Seleccionar un idioma: "));
       availableLanguages.forEach((l, index) => {
         if (index === this.#selected) {
-          console.log(bold(`  ${index + 1}) ${languages[l]}`));
+          console.log(`  ${green("\u25C9")} ${languages[l]}`);
         } else {
-          console.log(gray(`  ${index + 1}) ${languages[l]}`));
+          console.log(`  \u25CE ${languages[l]}`);
         }
       });
       console.log();
