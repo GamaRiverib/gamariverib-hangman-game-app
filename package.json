@@ -1,0 +1,30 @@
+{
+  "name": "@gamariverib/hangman-game-app",
+  "version": "0.1.0",
+  "description": "Juego del ahorcado (adivina la palabra) en terminal",
+  "main": "index.js",
+  "author": {
+    "name": "José Gamaliel Rivera Ibarra",
+    "email": "gama.rivera@gmail.com",
+    "url": "https://gamarivera.dev"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@gamariverib/hangman-game-lib": "^0.1.0",
+    "colors": "^1.4.0"
+  },
+  "bin": {
+    "hangman": "./index.js"
+  },
+  "keywords": [
+    "Juego",
+    "CLI",
+    "Ahorcado"
+  ],
+  "repository": {
+    "type": "git"
+  }
+}
