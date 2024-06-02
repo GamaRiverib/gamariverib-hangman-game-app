@@ -15,6 +15,71 @@ const configFile = "config.json";
 const statisticsFile = "statistics.txt";
 
 /**
+ * Forza el valor a un número
+ * @param {any} val Valor
+ * @param {number|undefined} [defaultValue]
+ * @returns
+ */
+function forceNumber(val, defaultValue) {
+  if (typeof val === "number") {
+    return val;
+  }
+  if (typeof val === "string") {
+    try {
+      const num = parseInt(val);
+      if (isNaN(num)) {
+        return defaultValue || 0;
+      }
+      return num;
+    } catch (reason) {
+      return defaultValue || 0;
+    }
+  }
+  return defaultValue || 0;
+}
+
+/**
+   * Serializa la instancia de estadísticas del juego
+   * @param {any} obj Objeto
+   * @returns {string} Objeto serializado
+   */
+function serialize(obj) {
+  const str = JSON.stringify(obj);
+  return Buffer.from(str).toString("base64");
+}
+
+/**
+ * Deserializa una instancia de estadísticas del juego
+ * @param {string} str Objeto de estadísticas del juego serializado
+ * @returns {GameStatistics} Instancia de estadísticas del juego
+ */
+ function deserialize(str) {
+  const json = JSON.parse(Buffer.from(str, "base64").toString());
+  const {
+    rounds,
+    wins,
+    lost,
+    consecutiveWins,
+    highestConsecutiveWins,
+    correctLetterCount,
+    wrongLetterCount,
+    helpersCount,
+    noWrongLettersCount,
+  } = json;
+  const obj = new GameStatistics();
+  obj.rounds = forceNumber(rounds);
+  obj.wins = forceNumber(wins);
+  obj.lost = forceNumber(lost);
+  obj.consecutiveWins = forceNumber(consecutiveWins);
+  obj.highestConsecutiveWins = forceNumber(highestConsecutiveWins);
+  obj.correctLeterCount = forceNumber(correctLetterCount);
+  obj.wrongLetterCount = forceNumber(wrongLetterCount);
+  obj.helpersCount = helpersCount;
+  obj.noWrongLettersCount = forceNumber(noWrongLettersCount);
+  return obj;
+}
+
+/**
  * Obtiene la lista de palabras desde un archivo.
  * @param {string} fileName Nombre del archivo que contiene la lista de palabras
  * @param {*} language Idioma de la lista de palabras en el archivo
@@ -63,7 +128,7 @@ function getPreviousGameStatistics() {
       return;
     }
     const buffer = fs.readFileSync(statisticsFile);
-    return GameStatistics.deserialize(buffer.toString());
+    return deserialize(buffer.toString());
   } catch (reason) {
     console.log("Failed to load previous game settings");
   }
@@ -84,7 +149,7 @@ function saveGameConfig(config) {
  * @param {GameStatistics} statistics
  */
 function saveGameStatistics(statistics) {
-  return fs.writeFileSync(statisticsFile, statistics.serialize());
+  return fs.writeFileSync(statisticsFile, serialize(statistics));
 }
 
 /**
