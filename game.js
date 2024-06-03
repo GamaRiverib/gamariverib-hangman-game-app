@@ -15,30 +15,6 @@ const configFile = "config.json";
 const statisticsFile = "statistics.txt";
 
 /**
- * Forza el valor a un número
- * @param {any} val Valor
- * @param {number|undefined} [defaultValue]
- * @returns
- */
-function forceNumber(val, defaultValue) {
-  if (typeof val === "number") {
-    return val;
-  }
-  if (typeof val === "string") {
-    try {
-      const num = parseInt(val);
-      if (isNaN(num)) {
-        return defaultValue || 0;
-      }
-      return num;
-    } catch (reason) {
-      return defaultValue || 0;
-    }
-  }
-  return defaultValue || 0;
-}
-
-/**
    * Serializa la instancia de estadísticas del juego
    * @param {any} obj Objeto
    * @returns {string} Objeto serializado
@@ -55,28 +31,7 @@ function serialize(obj) {
  */
  function deserialize(str) {
   const json = JSON.parse(Buffer.from(str, "base64").toString());
-  const {
-    rounds,
-    wins,
-    lost,
-    consecutiveWins,
-    highestConsecutiveWins,
-    correctLetterCount,
-    wrongLetterCount,
-    helpersCount,
-    noWrongLettersCount,
-  } = json;
-  const obj = new GameStatistics();
-  obj.rounds = forceNumber(rounds);
-  obj.wins = forceNumber(wins);
-  obj.lost = forceNumber(lost);
-  obj.consecutiveWins = forceNumber(consecutiveWins);
-  obj.highestConsecutiveWins = forceNumber(highestConsecutiveWins);
-  obj.correctLeterCount = forceNumber(correctLetterCount);
-  obj.wrongLetterCount = forceNumber(wrongLetterCount);
-  obj.helpersCount = helpersCount;
-  obj.noWrongLettersCount = forceNumber(noWrongLettersCount);
-  return obj;
+  return GameStatistics.fromJson(json);
 }
 
 /**

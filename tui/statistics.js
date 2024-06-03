@@ -48,7 +48,7 @@ class GameStatisticsTuiComponent {
       console.log(` Derrotas: \t\t ${yellow(statistics.lost + "")}`);
       console.log(` Racha: \t\t ${yellow(statistics.consecutiveWins + "")}`);
       console.log(` Mejor racha: \t\t ${yellow(statistics.highestConsecutiveWins + "")}`);
-      console.log(` Aciertos: \t\t ${yellow(statistics.correctLeterCount + "")}`);
+      console.log(` Aciertos: \t\t ${yellow(statistics.correctLetterCount + "")}`);
       console.log(` Errores: \t\t ${yellow(statistics.wrongLetterCount + "")}`);
       if (statistics.helpersCount) {
         for (const h of Object.keys(statistics.helpersCount)) {
